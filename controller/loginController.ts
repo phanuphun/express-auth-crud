@@ -1,11 +1,11 @@
-import { Request as Req, Response as Res } from "express";
+import {RequestHandler } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import auth from "../utils/auth"
 
 const prisma = new PrismaClient();
 
-const login = async (req: Req, res: Res) => {
+const login:RequestHandler = async (req,res) => {
     const {username,password} = req.body
     try{
         const user = await prisma.users.findFirst({
@@ -40,7 +40,7 @@ const login = async (req: Req, res: Res) => {
     }
 };
 
-const register = async (req: Req, res: Res) => {
+const register:RequestHandler = async (req, res) => {
     const {username , password} = req.body
     const hashPassword: string = await bcrypt.hash(password, 10);
 

@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import process from "process";
-import { NextFunction as Next , NextFunction, Request as Req , Response as Res } from "express";
 import { RequestHandler } from "express";
 
 interface Payload{
@@ -13,7 +12,7 @@ interface Payload{
 const privateKey = process.env.PRIVATE_KEY
 
 async function createToken (payload:Payload):Promise<string>{
-    return jwt.sign(payload,String(privateKey),{
+    return jwt.sign({id:payload.id,username:payload.username},String(privateKey),{
         algorithm:'HS256',
         expiresIn:'10hr',
     })
