@@ -22,12 +22,16 @@ model Users {
 model Categories {
     id   Int     @id @default(autoincrement())
     name String  @unique @db.VarChar(255)
-    book Books[] //1:N
+    book Books[]
 }
-// Categories : Books // 1 : N
+
+// Categories : Books
+//          1 : N
+
 model Books {
     id         Int        @id @default(autoincrement())
-    title      String     @db.VarChar(255)
+    title      String     @unique @db.VarChar(255)
+    image      String     @db.VarChar(255)
     categoryId Int
-    category   Categories @relation(fields: [categoryId], references: [id] ,onDelete: Restrict)
+    category   Categories @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 }

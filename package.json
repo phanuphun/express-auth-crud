@@ -5,12 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./server.ts",
-    "studio": "npx prisma studio",
-    "generate": "npx prisma generate",
+    "pdb": "npx prisma studio",
+    "pgen": "npx prisma generate",
     "lint": "npx eslint ./**/*.{ts,tsx}",
-    "format": "npx eslint --fix",
-    "prettier": "prettier --ignore-path .gitignore --write \"./**/*.+(js|ts|json)\"",
-    "prettier:fix": "prettier --write src"
+    "format": "npx eslint --fix"
   },
   "keywords": [
     "express",
@@ -25,6 +23,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
@@ -32,6 +31,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
+    "@types/multer": "^1.4.12",
     "@types/node": "^22.9.0",
     "@typescript-eslint/parser": "^8.13.0",
     "eslint": "^9.14.0",

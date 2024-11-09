@@ -1,5 +1,5 @@
 import express from 'express';
-import authCt from '../controller/authController';
+import authCt from '../controller/auth.controller';
 const route = express.Router();
 
 route.post('/login', authCt.login);
