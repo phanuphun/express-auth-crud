@@ -1,9 +1,8 @@
-import express from "express";
-import authCt from "../controller/authController";
-
+import express from 'express';
+import authCt from '../controller/authController';
 const route = express.Router();
 
-route.post('/login',authCt.login)
-route.post('/register',authCt.register)
+route.post('/login', authCt.login);
+route.post('/register', authCt.register);
 
-export {route as loginRoute};
+export { route as loginRoute };

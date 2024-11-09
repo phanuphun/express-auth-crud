@@ -5,29 +5,41 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./server.ts",
-    "db": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "generate": "npx prisma generate",
+    "lint": "npx eslint ./**/*.{ts,tsx}",
+    "format": "npx eslint --fix",
+    "prettier": "prettier --ignore-path .gitignore --write \"./**/*.+(js|ts|json)\"",
+    "prettier:fix": "prettier --write src"
   },
   "keywords": [
     "express",
-    "authentication"
+    "authentication",
+    "crud"
   ],
   "author": "phanuphun.na",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.22.0",
-    "@types/bcrypt": "^5.0.2",
-    "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/node": "^22.9.0",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.14.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.9.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
+    "globals": "^15.12.0",
     "nodemon": "^3.1.7",
-    "prisma": "^5.22.0"
+    "prettier": "^3.3.3",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.13.0"
   }
 }
