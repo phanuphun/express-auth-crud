@@ -5,16 +5,29 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model Users {
-  id Int @id @default(autoincrement())
-  username String @db.VarChar(255)
-  password String @db.VarChar(255)
+    id       Int    @id @default(autoincrement())
+    username String @unique @db.VarChar(255)
+    password String @db.VarChar(255)
+}
+
+model Categories {
+    id   Int     @id @default(autoincrement())
+    name String  @unique @db.VarChar(255)
+    book Books[] //1:N
+}
+// Categories : Books // 1 : N
+model Books {
+    id         Int        @id @default(autoincrement())
+    title      String     @db.VarChar(255)
+    categoryId Int
+    category   Categories @relation(fields: [categoryId], references: [id] ,onDelete: Restrict)
 }

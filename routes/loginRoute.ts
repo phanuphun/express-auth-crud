@@ -1,10 +1,9 @@
 import express from "express";
-import loginCt from "../controller/loginController";
-import auth from "../utils/auth"
+import authCt from "../controller/authController";
 
 const route = express.Router();
 
-route.post('/login',loginCt.login)
-route.post('/register',loginCt.register)
+route.post('/login',authCt.login)
+route.post('/register',authCt.register)
 
 export {route as loginRoute};

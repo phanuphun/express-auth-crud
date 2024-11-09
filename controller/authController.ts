@@ -1,23 +1,21 @@
 import {RequestHandler } from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import auth from "../utils/auth"
+import {createToken} from "../utils/createToken"
 
 const prisma = new PrismaClient();
 
-const login:RequestHandler = async (req,res) => {
+const login:RequestHandler = async (req,res,next) => {
     const {username,password} = req.body
+
     try{
-        const user = await prisma.users.findFirst({
+        const user = await prisma.users.findUnique({
             where:{username}
         })
 
-        if(user === null){
-            res.status(404).send({ message: 'User not found' });
-        }
-        else {
+        if(user !== null){
             if(await bcrypt.compare(password,user.password)){
-                const token = await auth.createToken(user);
+                const token = await createToken(user);
                 res.status(200).send({
                     user:{
                         id:user.id,
@@ -30,28 +28,26 @@ const login:RequestHandler = async (req,res) => {
                 res.status(401).send({ message: 'Username or Password Invalid' });
             }
         }
-    }catch(err){
-        console.error('Error Login user:', err);
-        if(err instanceof Prisma.PrismaClientKnownRequestError){
-            res.status(400).send({ message: 'Database error' , err });
-        }else{
-            res.status(500).send({ message: 'Internal server error' ,err });
+        else {
+            res.status(404).send({ message: 'User not found' });
         }
+    }catch(err){
+        next(err)
     }
 };
 
-const register:RequestHandler = async (req, res) => {
+const register:RequestHandler = async (req, res, next) => {
     const {username , password} = req.body
     const hashPassword: string = await bcrypt.hash(password, 10);
 
     try{
-        const users = await prisma.users.findMany(
+        const users = await prisma.users.findUnique(
             {
                 where: {username}
             }
         )
 
-        if(users.length >= 1){
+        if(users != null){
             res.status(409).send({ message: 'Username already exists' });
         }else{
             await prisma.users.create({
@@ -62,20 +58,14 @@ const register:RequestHandler = async (req, res) => {
             })
             res.status(201).send({ message: 'User registered successfully' });
         }
-
     }catch(err){
-        console.error('Error registering user:', err);
-        if(err instanceof Prisma.PrismaClientKnownRequestError){
-            res.status(400).send({ message: 'Database error' , err });
-        }else{
-            res.status(500).send({ message: 'Internal server error' , err });
-        }
+        next(err);
     }
 };
 
-const loginCt = {
+const authCt = {
     login,
     register,
 };
 
-export default loginCt;
+export default authCt;

@@ -1,11 +1,11 @@
 {
-  "name": "express-auth",
+  "name": "express-auth-crud",
   "version": "1.0.0",
-  "description": "",
+  "description": "sample express auth crud",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./server.ts",
-    "view-db": "npx prisma studio"
+    "db": "npx prisma studio"
   },
   "keywords": [
     "express",
