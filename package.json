@@ -4,6 +4,7 @@
   "description": "sample express auth crud",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "nodemon ./server.ts",
     "pdb": "npx prisma studio",
     "pgen": "npx prisma generate",

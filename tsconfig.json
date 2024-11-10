@@ -10,5 +10,5 @@
     "skipLibCheck": false
   },
   "exclude": ["node_modules", "dist"],
-  "include": ["./*.ts"]
+  "include": ["./*.ts", "server.ts"]
 }

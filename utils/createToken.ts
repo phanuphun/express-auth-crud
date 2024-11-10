@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
+import {config} from '../config/config';
 
 interface Payload {
     id?: number;
@@ -8,7 +7,7 @@ interface Payload {
     password: string;
 }
 
-const privateKey = process.env.PRIVATE_KEY;
+const privateKey = config.privateKey;
 
 export async function createToken(
     payload: Payload,
@@ -20,7 +19,6 @@ export async function createToken(
         {
             algorithm: 'HS256',
             expiresIn: rememberMe ? '999d' : '10h',
-            // expiresIn: '20h',
         },
     );
 }

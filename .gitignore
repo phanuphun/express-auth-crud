@@ -1,6 +1,7 @@
 node_modules
 NOTES.md
 .env
+dist
 
 *.jpg
 *.jpeg
