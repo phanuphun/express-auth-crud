@@ -8,14 +8,12 @@ const router = Express.Router();
 
 router.get('/', (req, res) => {
     res.status(200).send(
-        'Welcome to express api for testing Auth and CRUD system.',
+        'Hello API.',
     );
 });
 
 router.use(loginRoute);
 router.use(validateToken, categoryRoute);
 router.use(validateToken, bookRoute);
-
-
 
 export default router;

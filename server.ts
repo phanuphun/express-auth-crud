@@ -1,12 +1,11 @@
 import express from 'express';
 import path from 'path';
 import router from './routes/routes';
-import dotenv from 'dotenv';
 import errHandler from './middleware/errHandler';
-dotenv.config();
+import {config} from './config/config';
 
 const app = express();
-const port = process.env.PORT;
+const port = config.port;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -10,14 +10,20 @@ export interface CustomErr {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errHandler: ErrorRequestHandler = (err, req, res, next) => {
-    let statusCode = 500;
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
         let statusCode = 500;
         let errMsg = 'Unknow error occurred on prisma';
-        // Custom error prisma client
+        // Custom prisma client error
         if (err.code === 'P2002') {
             statusCode = 409;
-            err.message ? (errMsg = err.message) : (errMsg = 'Duplicate entry');
+            if (err.message) errMsg = err.message;
+            else errMsg = 'Duplicate entry';
+
+        } else if (err.code === 'P2003') {
+            statusCode = 409;
+            if (err.message) errMsg = err.message;
+            else errMsg = 'Cannot complete the operation due to related records';
+
         } else if (err.code === 'P2025') {
             statusCode = 404;
             errMsg = 'Record not found';
@@ -28,8 +34,9 @@ const errHandler: ErrorRequestHandler = (err, req, res, next) => {
             errMsg,
         });
     } else if (err instanceof Prisma.PrismaClientValidationError) {
+        console.log(`Error Code : Client Validation Error - ${err.message}`);
         res.status(400).send({
-            errCode: 'Unknow Code',
+            errCode: 'Client Validation Error',
             errMsg: 'Missing field or Incorrect field type provided for query data',
             err,
         });
@@ -46,7 +53,7 @@ const errHandler: ErrorRequestHandler = (err, req, res, next) => {
         });
     } else {
         console.log(`Unknow error occurred : ${err}`);
-        res.status(err.statusCode || statusCode).send({
+        res.status(err.statusCode).send({
             errCode: err.statusCode,
             errMsg: 'Unknow error occurred',
             err,

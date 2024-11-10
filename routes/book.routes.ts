@@ -4,7 +4,9 @@ import uploads from '../utils/upload';
 
 const router = express.Router();
 
-router.get('/getBook', bookCt.getBooks);
+router.get('/getBooks', bookCt.getBooks);
 router.post('/addBook', uploads.upload, bookCt.addBook);
+router.post('/updateBook', uploads.upload, bookCt.updateBook);
+router.delete('/deleteBook/:id', bookCt.deleteBook);
 
 export { router as bookRoute };

@@ -12,6 +12,7 @@ export const deleteFile = async (
         fs.unlinkSync(img);
         if (fs.existsSync(img)) {
             fs.unlinkSync(img);
+            console.log(filename,' deleted');
         }
     } catch (err) {
         console.log((err as Error).message);
