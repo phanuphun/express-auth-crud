@@ -1,13 +1,17 @@
-import { RequestHandler } from 'express';
+import { RequestHandler as ReqHandler, NextFunction as Next } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { createToken } from '../utils/createToken';
 
 const prisma = new PrismaClient();
 
-const login: RequestHandler = async (req, res, next) => {
+// Login
+interface LoginBody {
+    username: string,
+    password: string
+}
+const login: ReqHandler<unknown, unknown, LoginBody, Next> = async (req, res, next) => {
     const { username, password } = req.body;
-
     try {
         const user = await prisma.users.findUnique({
             where: { username },
@@ -37,7 +41,12 @@ const login: RequestHandler = async (req, res, next) => {
     }
 };
 
-const register: RequestHandler = async (req, res, next) => {
+// Register 
+interface RegisterBody {
+    username: string
+    password: string
+}
+const register: ReqHandler<unknown, unknown, RegisterBody, Next> = async (req, res, next) => {
     const { username, password } = req.body;
     const hashPassword: string = await bcrypt.hash(password, 10);
 

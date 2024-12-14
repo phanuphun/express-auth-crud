@@ -1,12 +1,13 @@
 import { PrismaClient } from '@prisma/client';
-import { RequestHandler } from 'express';
+import { NextFunction as Next, RequestHandler as ReqHandler } from 'express';
 import { PrismaClientKnownRequestError as PrismaErr } from '@prisma/client/runtime/library';
 import { deleteFile } from '../utils/deleteFile';
 import { config } from '../config/config';
 
 const prisma = new PrismaClient();
 
-const getBooks: RequestHandler = async (req, res, next) => {
+// get all books
+const getBooks: ReqHandler = async (req, res, next) => {
     try {
         const books = await prisma.books.findMany({
             select: {
@@ -30,7 +31,14 @@ const getBooks: RequestHandler = async (req, res, next) => {
     }
 };
 
-const addBook: RequestHandler = async (req, res, next) => {
+// Insert one book
+interface InsertBookBody {
+    filename: string
+    cId: number
+    title: string
+}
+
+const addBook: ReqHandler<unknown, unknown, InsertBookBody> = async (req, res, next) => {
     const filename = req.file?.filename;
     const cId = +req.body.cId;
     const title = req.body.title;
@@ -56,7 +64,15 @@ const addBook: RequestHandler = async (req, res, next) => {
     }
 };
 
-const updateBook: RequestHandler = async (req, res, next) => {
+// Update book
+
+interface UpdateBookBody {
+    id: number,
+    title: string,
+    cId: number,
+    filename: string,
+}
+const updateBook: ReqHandler<unknown, unknown, UpdateBookBody> = async (req, res, next) => {
     const id = +req.body.id;
     const title = req.body.title;
     const cId = +req.body.cId;
@@ -98,7 +114,8 @@ const updateBook: RequestHandler = async (req, res, next) => {
     }
 };
 
-const deleteBook: RequestHandler = async (req, res, next) => {
+// Delete Books
+const deleteBook: ReqHandler<{id:number}> = async (req, res, next) => {
     const id = +req.params.id;
     try {
         const book = await prisma.books.findUnique({ where: { id } });

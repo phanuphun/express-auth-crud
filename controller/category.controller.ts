@@ -1,9 +1,11 @@
 import { Categories, PrismaClient } from '@prisma/client';
-import { RequestHandler } from 'express';
+import { RequestHandler as ReqHandler } from 'express';
 import { PrismaClientKnownRequestError as PrismaErr } from '@prisma/client/runtime/library';
 
 const prisma = new PrismaClient();
-const getCategory: RequestHandler = async (req, res, next) => {
+
+// Get Categories
+const getCategory: ReqHandler = async (req, res, next) => {
     try {
         const categories: Array<Categories> =
             await prisma.categories.findMany();
@@ -19,7 +21,8 @@ const getCategory: RequestHandler = async (req, res, next) => {
     }
 };
 
-const addCategory: RequestHandler = async (req, res, next) => {
+// Insert Category
+const addCategory: ReqHandler<unknown, unknown, { name: string }> = async (req, res, next) => {
     const name = req.body.name;
     try {
         await prisma.categories.create({
@@ -39,7 +42,8 @@ const addCategory: RequestHandler = async (req, res, next) => {
     }
 };
 
-const deleteCategory: RequestHandler = async (req, res, next) => {
+// Delete
+const deleteCategory: ReqHandler<{ id: number }> = async (req, res, next) => {
     const id = +req.params.id;
     try {
         await prisma.categories.delete({
@@ -55,9 +59,14 @@ const deleteCategory: RequestHandler = async (req, res, next) => {
     }
 };
 
-const updateCategory: RequestHandler = async (req, res, next) => {
+// Update
+interface UpdatecategoryBody {
+    id: number,
+    name: string
+}
+const updateCategory: ReqHandler<unknown, unknown, UpdatecategoryBody> = async (req, res, next) => {
     const id = +req.body.id;
-    const name = req.body.name;
+    const name = req.body.name
     try {
         await prisma.categories.update({
             data: {
