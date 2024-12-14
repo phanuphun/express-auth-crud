@@ -13,7 +13,9 @@ router.get('/', (req, res) => {
 });
 
 router.use(loginRoute);
-router.use(validateToken, categoryRoute);
-router.use(validateToken, bookRoute);
+
+router.use(validateToken)
+router.use(bookRoute);
+router.use(categoryRoute);
 
 export default router;

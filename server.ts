@@ -2,11 +2,17 @@ import express from 'express';
 import path from 'path';
 import router from './routes/routes';
 import errHandler from './middleware/errHandler';
-import {config} from './config/config';
+import { config } from './config/config';
+import cors from 'cors'
+import { customCorsOptions } from './config/cors.config'
+
 
 const app = express();
-const port = config.port;
 
+const host = config.host
+const port = config.port || 3030;
+
+app.use(cors(customCorsOptions))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, './public')));
@@ -15,6 +21,6 @@ app.use(router);
 
 app.use(errHandler);
 
-app.listen(port || 3030, () => {
-    console.log('server start at port: ', port || 3030);
+app.listen(+port , host , () => {
+    console.log(`server start at http://${host}:${port || 3030}`);
 });
