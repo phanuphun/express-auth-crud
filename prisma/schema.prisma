@@ -4,6 +4,11 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "../public/erd/er-diagram.svg"
+}
+
 generator client {
     provider = "prisma-client-js"
     previewFeatures = ["relationJoins"]

@@ -13,18 +13,12 @@ export const customCorsOptions: CorsOptions = {
             cb(null, false);
         }
     },
-    methods: [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE',
-        'PATCH'
-    ],
+    methods: ['GET','POST','PUT','DELETE','PATCH'],
     preflightContinue: true,
     allowedHeaders: [
         'Content-Type',
         'Authorization'
     ],
-    // define preflight response status bc default is , 204 some brownser not support this status 
+    // define preflight response status bc default is 204 , some old brownser not support this status 
     optionsSuccessStatus: 204,
 }
