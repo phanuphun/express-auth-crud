@@ -4,12 +4,10 @@ COPY ./package* .
 RUN npm install
 
 COPY ./prisma ./prisma
-RUN npm run prisma:gen
+RUN npm run prisma:gen 
 
 COPY . .
-
 RUN npm run build
-RUN cp .env ./dist/
-WORKDIR /usr/src/app/dist
 
-CMD ["npm", "run", "start"]
+WORKDIR /usr/src/app/dist
+CMD ["sh", "-c", "npm run prisma:mg:pd && npm run start"]

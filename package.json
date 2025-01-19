@@ -9,6 +9,7 @@
     "dev": "nodemon ./server.ts",
     "prisma:db": "npx prisma studio",
     "prisma:gen": "npx prisma generate",
+    "prisma:mg:pd": "npx prisma migrate deploy",
     "lint": "npx eslint ./**/*.{ts,tsx}",
     "format": "npx eslint --fix"
   },

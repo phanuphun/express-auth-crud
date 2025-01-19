@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  postgres_db:
+  db:
     image: postgres:17-alpine
     ports:
       - 5433:5432
@@ -13,17 +13,17 @@ services:
       - pg_books_store:/var/lib/postgresql/data
     restart: unless-stopped
 
-  express_backend_api:
+  api:
     build: .
     environment:
-      - DATABASE_URL="postgresql://exroot:expass@localhost:5433/excrud?schema=SCHEMA"
+      - DATABASE_URL=postgresql://exroot:expass@db:5432/excrud?schema=SCHEMA
       - HOST=0.0.0.0
       - PORT=7771
       - PRIVATE_KEY=MYPRIVATEKEY
     ports:
       - 5434:7771
     depends_on:
-      - postgres_db
+      - db
     restart: unless-stopped
 
 volumes:
