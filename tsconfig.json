@@ -7,8 +7,14 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true, // check uppercase and lowercase letter ref file.
     "strict": true,
-    "skipLibCheck": false
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["./*.ts", "server.ts"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "./*.ts",
+    "server.ts"
+  ]
 }

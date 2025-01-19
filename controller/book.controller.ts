@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { NextFunction as Next, RequestHandler as ReqHandler } from 'express';
+import { RequestHandler as ReqHandler } from 'express';
 import { PrismaClientKnownRequestError as PrismaErr } from '@prisma/client/runtime/library';
 import { deleteFile } from '../utils/deleteFile';
 import { config } from '../config/config';
@@ -115,7 +115,7 @@ const updateBook: ReqHandler<unknown, unknown, UpdateBookBody> = async (req, res
 };
 
 // Delete Books
-const deleteBook: ReqHandler<{id:number}> = async (req, res, next) => {
+const deleteBook: ReqHandler<{ id: number }> = async (req, res, next) => {
     const id = +req.params.id;
     try {
         const book = await prisma.books.findUnique({ where: { id } });

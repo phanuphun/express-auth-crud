@@ -66,7 +66,7 @@ interface UpdatecategoryBody {
 }
 const updateCategory: ReqHandler<unknown, unknown, UpdatecategoryBody> = async (req, res, next) => {
     const id = +req.body.id;
-    const name = req.body.name
+    const name = req.body.name;
     try {
         await prisma.categories.update({
             data: {

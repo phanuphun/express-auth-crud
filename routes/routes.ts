@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 router.use(loginRoute);
 
-router.use(validateToken)
+router.use(validateToken);
 router.use(bookRoute);
 router.use(categoryRoute);
 

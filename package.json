@@ -2,9 +2,10 @@
   "name": "express-auth-crud",
   "version": "1.0.0",
   "description": "sample express auth crud",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "build": "tsc",
+    "start": "node ./dist/server.js",
     "dev": "nodemon ./server.ts",
     "prisma:db": "npx prisma studio",
     "prisma:gen": "npx prisma generate",
@@ -44,7 +45,6 @@
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
     "prisma": "^5.22.0",
-    "prisma-erd-generator": "^1.11.2",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.13.0"
   }
